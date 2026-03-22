@@ -1,0 +1,23 @@
+# Introduction to Retrieval-Augmented Generation (RAG)
+
+Retrieval-Augmented Generation (RAG) is an AI framework that combines information retrieval with large language model generation. Instead of relying solely on a model's training data, RAG systems fetch relevant documents from an external knowledge base and use them as context when generating answers.
+
+## How RAG Works
+
+A RAG pipeline consists of two main phases: the indexing phase and the querying phase.
+
+During indexing, documents are split into smaller chunks, converted into numerical vector representations called embeddings, and stored in a vector database. Each embedding captures the semantic meaning of the text, enabling similarity-based search.
+
+During querying, the user's question is also converted into an embedding. The system then searches the vector database to find the most semantically similar document chunks. These retrieved chunks are passed along with the original question to the language model, which generates a grounded answer.
+
+## Key Benefits
+
+RAG reduces hallucination by grounding the model's response in retrieved factual content. It allows knowledge bases to be updated without retraining the model. It is particularly valuable in enterprise settings where proprietary data needs to be queried securely.
+
+## Evaluation Metrics
+
+Evaluating a RAG system requires measuring multiple dimensions. Faithfulness measures whether the generated answer is grounded in the retrieved context without hallucinating facts. Answer relevance measures whether the response actually addresses the user's question. Retrieval precision measures whether the retrieved chunks are truly relevant to the question asked.
+
+## Common Tools
+
+Popular tools for building RAG systems include LangChain and LlamaIndex for orchestration, ChromaDB and Pinecone for vector storage, and sentence-transformers for generating embeddings. Large language models like Claude and GPT-4 are commonly used for the generation step.
