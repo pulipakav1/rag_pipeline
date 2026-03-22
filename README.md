@@ -126,6 +126,3 @@ pytest tests\ -q
 - Text-based PDFs work best; **scanned** PDFs need OCR elsewhere first.
 - After changing ingestion logic, **re-ingest** so Chroma reflects new chunks.
 
-## License
-
-Use and modify for your own purposes; ensure you comply with Anthropic, Chroma, and other dependency licenses.
