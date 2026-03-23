@@ -13,8 +13,8 @@ class Settings(BaseSettings):
     chroma_persist_dir: str = "./chroma_db"
     collection_name: str = "rag_documents"
 
-    chunk_size: int = 512
-    chunk_overlap: int = 50
+    chunk_size: int = 700
+    chunk_overlap: int = 120
 
     top_k: int = 5
 
