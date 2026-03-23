@@ -8,6 +8,7 @@ from pydantic import BaseModel
 from src.pipeline import RAGPipeline
 
 
+
 pipeline: RAGPipeline = None
 
 
@@ -19,6 +20,7 @@ async def lifespan(app: FastAPI):
     logger.info("RAG Pipeline ready")
     yield
     logger.info("Shutting down")
+
 
 
 app = FastAPI(
@@ -36,6 +38,7 @@ app.add_middleware(
 )
 
 
+
 class QueryRequest(BaseModel):
     question: str
     top_k: int = 5
@@ -49,6 +52,7 @@ class IngestTextRequest(BaseModel):
 
 class IngestDirRequest(BaseModel):
     dir_path: str
+
 
 
 @app.get("/health")
@@ -65,6 +69,9 @@ def stats():
 
 @app.post("/query")
 def query(request: QueryRequest):
+    """
+    Ask a question. Returns answer + sources + (optional) eval scores.
+    """
     if not pipeline:
         raise HTTPException(status_code=503, detail="Pipeline not initialized")
 
@@ -97,6 +104,7 @@ def query(request: QueryRequest):
 
 @app.post("/ingest/text")
 def ingest_text(request: IngestTextRequest):
+    """Ingest raw text into the knowledge base."""
     if not pipeline:
         raise HTTPException(status_code=503, detail="Pipeline not initialized")
 
@@ -106,6 +114,7 @@ def ingest_text(request: IngestTextRequest):
 
 @app.post("/ingest/directory")
 def ingest_directory(request: IngestDirRequest):
+    """Ingest all documents from a directory path."""
     if not pipeline:
         raise HTTPException(status_code=503, detail="Pipeline not initialized")
 
@@ -118,6 +127,10 @@ def ingest_directory(request: IngestDirRequest):
 
 @app.post("/eval/batch")
 def eval_batch(test_cases: list[dict]):
+    """
+    Run batch evaluation over a list of QA pairs.
+    Each item: {"question": str, "answer": str, "context": str}
+    """
     if not pipeline:
         raise HTTPException(status_code=503, detail="Pipeline not initialized")
 
